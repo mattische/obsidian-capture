@@ -1,0 +1,5 @@
+# Path to your Obsidian vault
+VAULT=~/path/to/your/vault
+
+# Note where captures are saved (created automatically if it doesn't exist)
+NOTE=Inbox.md

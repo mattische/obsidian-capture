@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CONFIG="$HOME/.config/obsidian-capture/config"
+source "$CONFIG"
+
+VAULT="${VAULT/#\~/$HOME}"
+NOTE_PATH="$VAULT/$NOTE"
+
+if [[ "${1:-}" == "--config" ]]; then
+    NEW_VAULT=$(gum input \
+        --header "Vault-sökväg" \
+        --header.foreground="212" \
+        --value "$VAULT" \
+        --padding="1 2" \
+        --width 58) || exit 0
+
+    NEW_NOTE=$(gum input \
+        --header "Notnamn (t.ex. Inbox.md eller TODOs/Inbox.md)" \
+        --header.foreground="212" \
+        --value "$NOTE" \
+        --padding="1 2" \
+        --width 58) || exit 0
+
+    NEW_VAULT="${NEW_VAULT/#$HOME/\~}"
+
+    cat > "$CONFIG" <<EOF
+# Sökväg till din Obsidian-vault
+VAULT=$NEW_VAULT
+
+# Notan där allt sparas (skapas automatiskt om den inte finns)
+NOTE=$NEW_NOTE
+EOF
+
+    gum style --foreground="212" --padding="1 2" "Sparat!"
+    sleep 1
+    exit 0
+fi
+
+TEXT=$(gum input \
+    --placeholder "Skriv text eller klistra in URL..." \
+    --header "Spara till Obsidian" \
+    --header.foreground="212" \
+    --prompt.foreground="99" \
+    --padding="1 2" \
+    --width 58) || exit 0
+
+[[ -z "$TEXT" ]] && exit 0
+
+TAGS_RAW=$(gum input \
+    --placeholder "Taggar, t.ex. sr, annan  (valfritt, tryck Enter för att hoppa över)" \
+    --header "Taggar" \
+    --header.foreground="240" \
+    --prompt.foreground="240" \
+    --padding="1 2" \
+    --width 58) || exit 0
+
+TAGS=""
+if [[ -n "$TAGS_RAW" ]]; then
+    TAGS=" $(echo "$TAGS_RAW" | tr ',' '\n' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//' | sed 's/^#*//' | sed 's/^/#/' | tr '\n' ' ' | sed 's/[[:space:]]*$//')"
+fi
+
+TIMESTAMP=$(date "+%Y-%m-%d %H:%M")
+ENTRY="- [ ] $TIMESTAMP $TEXT$TAGS"
+
+mkdir -p "$(dirname "$NOTE_PATH")"
+if [[ -f "$NOTE_PATH" ]]; then
+    EXISTING=$(cat "$NOTE_PATH")
+    printf '%s\n%s\n' "$ENTRY" "$EXISTING" > "$NOTE_PATH"
+else
+    printf '%s\n' "$ENTRY" > "$NOTE_PATH"
+fi
