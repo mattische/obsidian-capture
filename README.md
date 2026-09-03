@@ -2,6 +2,9 @@
 
 A minimal keyboard-driven capture tool for [Obsidian](https://obsidian.md). Press a keybinding, type text or paste a URL, optionally add tags — it lands as a checkbox at the top of a note, with a timestamp.
 
+![Capture](screenshots/capture.png)
+![Config](screenshots/config.png)
+
 ```
 - [ ] 2026-09-03 14:22 https://example.com #sr #readlater
 ```
