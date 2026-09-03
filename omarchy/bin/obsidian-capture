@@ -9,14 +9,14 @@ NOTE_PATH="$VAULT/$NOTE"
 
 if [[ "${1:-}" == "--config" ]]; then
     NEW_VAULT=$(gum input \
-        --header "Vault-sökväg" \
+        --header "Vault path" \
         --header.foreground="212" \
         --value "$VAULT" \
         --padding="1 2" \
         --width 58) || exit 0
 
     NEW_NOTE=$(gum input \
-        --header "Notnamn (t.ex. Inbox.md eller TODOs/Inbox.md)" \
+        --header "Note name (e.g. Inbox.md or TODOs/Inbox.md)" \
         --header.foreground="212" \
         --value "$NOTE" \
         --padding="1 2" \
@@ -25,21 +25,21 @@ if [[ "${1:-}" == "--config" ]]; then
     NEW_VAULT="${NEW_VAULT/#$HOME/\~}"
 
     cat > "$CONFIG" <<EOF
-# Sökväg till din Obsidian-vault
+# Path to your Obsidian vault
 VAULT=$NEW_VAULT
 
-# Notan där allt sparas (skapas automatiskt om den inte finns)
+# Note where captures are saved (created automatically if it doesn't exist)
 NOTE=$NEW_NOTE
 EOF
 
-    gum style --foreground="212" --padding="1 2" "Sparat!"
+    gum style --foreground="212" --padding="1 2" "Saved!"
     sleep 1
     exit 0
 fi
 
 TEXT=$(gum input \
-    --placeholder "Skriv text eller klistra in URL..." \
-    --header "Spara till Obsidian" \
+    --placeholder "Type text or paste a URL..." \
+    --header "Save to Obsidian" \
     --header.foreground="212" \
     --prompt.foreground="99" \
     --padding="1 2" \
@@ -48,8 +48,8 @@ TEXT=$(gum input \
 [[ -z "$TEXT" ]] && exit 0
 
 TAGS_RAW=$(gum input \
-    --placeholder "Taggar, t.ex. sr, annan  (valfritt, tryck Enter för att hoppa över)" \
-    --header "Taggar" \
+    --placeholder "Tags, e.g. sr, readlater  (optional, press Enter to skip)" \
+    --header "Tags" \
     --header.foreground="240" \
     --prompt.foreground="240" \
     --padding="1 2" \
