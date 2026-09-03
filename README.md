@@ -91,7 +91,7 @@ bash install.sh
 Or via curl (no git required):
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/mattische/obsidian-capture/main/mac/install.sh -o /tmp/install.sh && bash /tmp/install.sh
+curl -fsSL https://raw.githubusercontent.com/mattische/obsidian-capture/master/mac/install.sh -o /tmp/install.sh && bash /tmp/install.sh
 ```
 
 The installer will:
