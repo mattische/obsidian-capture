@@ -26,10 +26,10 @@ if [[ "${1:-}" == "--config" ]]; then
 
     cat > "$CONFIG" <<EOF
 # Path to your Obsidian vault
-VAULT=$NEW_VAULT
+VAULT="$NEW_VAULT"
 
 # Note where captures are saved (created automatically if it doesn't exist)
-NOTE=$NEW_NOTE
+NOTE="$NEW_NOTE"
 EOF
 
     gum style --foreground="212" --padding="1 2" "Saved!"

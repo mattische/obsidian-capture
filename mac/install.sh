@@ -50,10 +50,10 @@ if [[ ! -f "$CONFIG_DIR/config" ]]; then
 
     cat > "$CONFIG_DIR/config" <<EOF
 # Path to your Obsidian vault
-VAULT=$VAULT
+VAULT="$VAULT"
 
 # Note where captures are saved (created automatically if it doesn't exist)
-NOTE=$NOTE
+NOTE="$NOTE"
 EOF
     echo "    Config written to $CONFIG_DIR/config"
 else
