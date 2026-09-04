@@ -22,7 +22,16 @@ fi
 
 echo "==> Installing obsidian-capture..."
 
-sudo cp "$SCRIPT_DIR/obsidian-capture" "$BIN_DIR/obsidian-capture"
+RAW_URL="https://raw.githubusercontent.com/mattische/obsidian-capture/master/mac/obsidian-capture"
+
+if [[ -f "$SCRIPT_DIR/obsidian-capture" ]]; then
+    sudo cp "$SCRIPT_DIR/obsidian-capture" "$BIN_DIR/obsidian-capture"
+else
+    echo "    Downloading obsidian-capture..."
+    curl -fsSL "$RAW_URL" -o /tmp/obsidian-capture
+    sudo cp /tmp/obsidian-capture "$BIN_DIR/obsidian-capture"
+    rm -f /tmp/obsidian-capture
+fi
 sudo chmod +x "$BIN_DIR/obsidian-capture"
 
 if [[ ! -f "$CONFIG_DIR/config" ]]; then
