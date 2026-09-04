@@ -69,7 +69,7 @@ cat > "$APP_DIR/$APP_NAME/Contents/MacOS/launch" <<'LAUNCHER'
 #!/usr/bin/env bash
 osascript <<'APPLESCRIPT'
 tell application "Terminal"
-    set w to do script "obsidian-capture"
+    set w to do script "obsidian-capture; exit"
     set bounds of front window to {300, 300, 900, 450}
     set custom title of front window to "Obsidian Capture"
     activate
